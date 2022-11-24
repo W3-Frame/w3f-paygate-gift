@@ -14,7 +14,7 @@ if ( ! class_exists( 'Dashboard' ) ) {
 				'W3F Gift List',
 				'W3F Gift',
 				'manage_options',
-				'w3f',
+				'gift_list',
 				'W3F\admin\Dashboard::gift_page_html',
 				'dashicons-image-filter',
 				20
@@ -22,20 +22,20 @@ if ( ! class_exists( 'Dashboard' ) ) {
 		}
 		public static function sub_menu_page() {
 			add_submenu_page(
-				'w3f',
+				'gift_list',
 				'W3F Gift List',
 				'Gift List',
 				'manage_options',
-				'w3f',
+				'gift_list',
 				'W3F\admin\Dashboard::gift_page_html',
 				20
 			);
 			add_submenu_page(
-				'w3f',
+				'gift_list',
 				'W3F Gift settings',
 				'Gift settings',
 				'manage_options',
-				'git_list',
+				'gift_settings',
 				'W3F\admin\Dashboard::settings_page_html',
 				20
 			);
@@ -46,7 +46,7 @@ if ( ! class_exists( 'Dashboard' ) ) {
 			?>
 			<div class="wrap">
 				<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-				<form action="<?php menu_page_url( 'w3f' ) ?>" method="post">
+				<form action="<?php menu_page_url( 'gift_list' ) ?>" method="post">
 					<label>Entrez la valeur de l'API KEY
 						<input type="text" value="<?php echo( $w3f_api_key ) ?>">
 					</label>
@@ -54,8 +54,8 @@ if ( ! class_exists( 'Dashboard' ) ) {
 					// output security fields for the registered setting "w3f_options"
 					settings_fields( 'w3f_options' );
 					// output setting sections and their fields
-					// (sections are registered for "w3f", each field is registered to a specific section)
-					do_settings_sections( 'w3f' );
+					// (sections are registered for "gift_list", each field is registered to a specific section)
+					do_settings_sections( 'gift_list' );
 					// output save settings button
 					submit_button( __( 'Enregister la clé Paygate', 'textdomain' ) );
 					?>
