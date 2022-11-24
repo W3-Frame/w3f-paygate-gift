@@ -15,9 +15,8 @@ namespace W3F;
 require_once( 'admin/PaygateApiHelper.php' );
 require_once( 'admin/Dashboard.php' );
 
+use W3F\admin\Dashboard;
 use W3F\admin\PaygateApiHelper;
-
-//use W3F\admin\Dashboard;
 
 /**
  * Activate gift plugin by register API Key
@@ -52,42 +51,4 @@ register_deactivation_hook(
 	'W3F\deactivate_gift'
 );
 
-/**
- * Add Top level menu for the plugin
- */
-add_action( 'admin_menu', 'W3F\w3f_options_page' );
-function w3f_options_page() {
-
-	add_menu_page(
-		'W3F Gift',
-		'W3F Gift',
-		'manage_options',
-		'w3f',
-		'W3F\w3f_options_page_html',
-//        plugin_dir_url(__FILE__) . 'images/icon_wporg.png',
-		20
-	);
-}
-
-function w3f_options_page_html() {
-	$w3f_api_key = '';
-	?>
-    <div class="wrap">
-        <h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-        <form action="<?php menu_page_url( 'w3f' ) ?>" method="post">
-            <label>Entrez la valeur de l'API KEY
-                <input type="text" value="<?php echo( $w3f_api_key ) ?>">
-            </label>
-			<?php
-			// output security fields for the registered setting "w3f_options"
-			settings_fields( 'w3f_options' );
-			// output setting sections and their fields
-			// (sections are registered for "w3f", each field is registered to a specific section)
-			do_settings_sections( 'w3f' );
-			// output save settings button
-			submit_button( __( 'Enregister la clé Paygate', 'textdomain' ) );
-			?>
-        </form>
-    </div>
-	<?php
-}
+Dashboard::init();
