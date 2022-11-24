@@ -12,28 +12,58 @@
  */
 
 namespace W3F;
-require_once ('W3f_paygate_api_helper.php');
+require_once( 'admin/PaygateApiHelper.php' );
+require_once( 'admin/Dashboard.php' );
 
-use W3F\W3f_paygate_api_helper;
+use W3F\admin\PaygateApiHelper;
+
+//use W3F\admin\Dashboard;
 
 /**
- * Register API with default value
+ * Activate gift plugin by register API Key
+ * @return void
  */
-if ( class_exists( 'W3f_paygate_api_helper' ) ) {
-	W3f_paygate_api_helper::w3f_register_api_key();
+
+function activate_gift() {
+	// TODO: Check if api key existe, if existe die else create api key option
+	if ( class_exists( 'W3F\admin\PaygateApiHelper' ) ) {
+		PaygateApiHelper::w3f_register_api_key();
+	}
 }
+
+register_activation_hook(
+	__FILE__,
+	'W3F\activate_gift'
+);
+
+
+/**
+ * Pulgin desactivation process
+ * @return void
+ */
+function deactivate_gift() {
+	if ( class_exists( 'W3F\admin\PaygateApiHelper' ) ) {
+		PaygateApiHelper::w3f_remove_api_key();
+	}
+}
+
+register_deactivation_hook(
+	__FILE__,
+	'W3F\deactivate_gift'
+);
 
 /**
  * Add Top level menu for the plugin
  */
 add_action( 'admin_menu', 'W3F\w3f_options_page' );
 function w3f_options_page() {
+
 	add_menu_page(
 		'W3F Gift',
 		'W3F Gift',
 		'manage_options',
 		'w3f',
-		'w3f_options_page_html',
+		'W3F\w3f_options_page_html',
 //        plugin_dir_url(__FILE__) . 'images/icon_wporg.png',
 		20
 	);
