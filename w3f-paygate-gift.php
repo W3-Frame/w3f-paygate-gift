@@ -10,7 +10,23 @@
  * Author URI:        https://w3frame.com/
  * License:           None
  */
-add_action( 'admin_menu', 'w3f_options_page' );
+
+namespace W3F;
+require_once ('W3f_paygate_api_helper.php');
+
+use W3F\W3f_paygate_api_helper;
+
+/**
+ * Register API with default value
+ */
+if ( class_exists( 'W3f_paygate_api_helper' ) ) {
+	W3f_paygate_api_helper::w3f_register_api_key();
+}
+
+/**
+ * Add Top level menu for the plugin
+ */
+add_action( 'admin_menu', 'W3F\w3f_options_page' );
 function w3f_options_page() {
 	add_menu_page(
 		'W3F Gift',
@@ -32,7 +48,7 @@ function w3f_options_page_html() {
             <label>Entrez la valeur de l'API KEY
                 <input type="text" value="<?php echo( $w3f_api_key ) ?>">
             </label>
-	        <?php
+			<?php
 			// output security fields for the registered setting "w3f_options"
 			settings_fields( 'w3f_options' );
 			// output setting sections and their fields
@@ -44,20 +60,4 @@ function w3f_options_page_html() {
         </form>
     </div>
 	<?php
-}
-
-function w3f_register_api_key() {
-	add_option( "w3f_paygate_api_key", '', '', true );
-}
-
-function w3f_remove_api_key() {
-	delete_option( "w3f_paygate_api_key" );
-}
-
-function w3f_get_api_key() {
-	get_option( "w3f_paygate_api_key", false );
-}
-
-function w3f_update_api_key() {
-	update_option( "w3f_paygate_api_key", "new Value" );
 }
